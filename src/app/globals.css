@@ -1,10 +1,13 @@
 @import "tailwindcss";
 
+/* --- Colores base (SIEMPRE claro) --- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ffffff;     /* fondo blanco */
+  --foreground: #0f172a;     /* texto oscuro (slate-900) */
+  --brand-blue: #0B5FFF;     /* azul de marca */
 }
 
+/* Tailwind v4 theme tokens */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,15 +15,77 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Desactivamos el modo oscuro automático */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #0f172a;
   }
 }
 
+/* Aseguramos el fondo/texto del body */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ===========================
+   TITULOS GLOBALES (h1–h4)
+   =========================== */
+@layer base {
+  h1, h2, h3, h4 {
+    /* Aplicamos la fuente de display cargada con next/font */
+    font-family: var(--font-display), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                 Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    letter-spacing: -0.01em;   /* tracking-tighter sutil */
+    line-height: 1.1;          /* compacto para impacto visual */
+    font-weight: 800;          /* peso alto por defecto (podés ajustar por nivel) */
+  }
+
+  /* Si querés jerarquía de pesos por nivel (opcional) */
+  h1 { font-weight: 900; }
+  h2 { font-weight: 800; }
+  h3 { font-weight: 700; }
+  h4 { font-weight: 600; }
+}
+
+/* ===========================
+   UTILIDAD OPCIONAL
+   =========================== */
+/* Usá .font-display si querés forzar la fuente de títulos en un componente puntual */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), ui-sans-serif, system-ui;
+  }
+  /* barra/punto que cruza de izq → der */
+  @keyframes kudu-scan {
+    0%   { left: -10%; opacity: .95; }
+    50%  { opacity: 1; }
+    100% { left: 110%; opacity: .95; }
+  }
+  .kudu-scan {
+    animation: kudu-scan 7s linear infinite; /* velocidad */
+    will-change: left, opacity;
+  }
+
+}
+/* ===== Divider Glow ===== */
+
+/* === Divider Scanner (barra de luz que no deja rastro) === */
+/* === Divider scanner en movimiento (sin rastro) === */
+@keyframes scan-left {
+  0%   { left: -10%; opacity: .95; }
+  50%  { opacity: 1; }
+  100% { left: 110%; opacity: .95; }
+}
+.animate-scan-left {
+  animation: scan-left 6s linear infinite; /* velocidad: subí a 8–10s si querés más lento */
+  will-change: left, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-scan-left { animation: none; }
+}
+
+
+
