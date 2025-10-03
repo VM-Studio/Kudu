@@ -80,7 +80,7 @@ body {
   100% { left: 110%; opacity: .95; }
 }
 .animate-scan-left {
-  animation: scan-left 6s linear infinite; /* velocidad: subí a 8–10s si querés más lento */
+  animation: scan-left 3s linear infinite; /* velocidad: subí a 8–10s si querés más lento */
   will-change: left, opacity;
 }
 @media (prefers-reduced-motion: reduce) {
