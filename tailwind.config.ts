@@ -29,9 +29,10 @@ const config: Config = {
       boxShadow: {
         soft: "0 10px 30px -12px rgba(2,6,23,.12)",
       },
-      // 👇 Familia de fuente para TITULOS leyendo la variable de next/font
+      // Fuente de títulos y cuerpo leyendo la variable que expone next/font
       fontFamily: {
         display: ['var(--font-display)', 'ui-sans-serif', 'system-ui'],
+        sans: ['var(--font-display)', 'ui-sans-serif', 'system-ui'],
       },
     },
   },

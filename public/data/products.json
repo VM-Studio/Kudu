@@ -1,0 +1,45 @@
+[
+    {
+      "id": "ext-90-01",
+      "name": "Extractor Axial 6” KUDU",
+      "description": "Extractor axial para pared. Caudal alto y bajo ruido.",
+      "image": "/extractores.png",
+      "category": "Extractores"
+    },
+    {
+      "id": "cam-90-01",
+      "name": "Campana 90 cm Inox",
+      "description": "Campana decorativa de 90 cm con 3 velocidades y luz LED.",
+      "image": "/campana.png",
+      "category": "Campanas"
+    },
+    {
+      "id": "pur-60-01",
+      "name": "Purificador Slim 60 cm",
+      "description": "Purificador con filtros lavables y recirculación.",
+      "image": "/purificador.png",
+      "category": "Purificadores"
+    },
+    {
+      "id": "ana-60-01",
+      "name": "Anafe Vitrocerámico 4H",
+      "description": "Superficie de vidrio templado, control táctil.",
+      "image": "/next.svg",
+      "category": "Anafes"
+    },
+    {
+      "id": "cam-60-02",
+      "name": "Campana 60 cm Inox",
+      "description": "Campana de pared, motor eficiente, LED.",
+      "image": "/campana.png",
+      "category": "Campanas"
+    },
+    {
+      "id": "ext-10-01",
+      "name": "Extractor Centrífugo 10”",
+      "description": "Para cañería larga, ideal cocinas y baños amplios.",
+      "image": "/extractores.png",
+      "category": "Extractores"
+    }
+  ]
+  

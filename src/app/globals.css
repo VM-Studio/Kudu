@@ -5,14 +5,17 @@
   --background: #ffffff;     /* fondo blanco */
   --foreground: #0f172a;     /* texto oscuro (slate-900) */
   --brand-blue: #0B5FFF;     /* azul de marca */
+
+  /* --font-display la inyecta next/font desde layout.tsx */
 }
 
-/* Tailwind v4 theme tokens */
+/* Tailwind v4 theme tokens (opcionales) */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Si querés, podés mapear sans a la misma var de display */
+  --font-sans: var(--font-display);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* Desactivamos el modo oscuro automático */
@@ -23,27 +26,26 @@
   }
 }
 
-/* Aseguramos el fondo/texto del body */
+/* Fondo, color y fuente global (sin theme()) */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-display), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 /* ===========================
-   TITULOS GLOBALES (h1–h4)
+   TÍTULOS GLOBALES (h1–h4)
    =========================== */
 @layer base {
   h1, h2, h3, h4 {
-    /* Aplicamos la fuente de display cargada con next/font */
     font-family: var(--font-display), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
                  Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
     letter-spacing: -0.01em;   /* tracking-tighter sutil */
     line-height: 1.1;          /* compacto para impacto visual */
-    font-weight: 800;          /* peso alto por defecto (podés ajustar por nivel) */
+    font-weight: 800;
   }
 
-  /* Si querés jerarquía de pesos por nivel (opcional) */
   h1 { font-weight: 900; }
   h2 { font-weight: 800; }
   h3 { font-weight: 700; }
@@ -51,41 +53,35 @@ body {
 }
 
 /* ===========================
-   UTILIDAD OPCIONAL
+   UTILIDADES OPCIONALES
    =========================== */
-/* Usá .font-display si querés forzar la fuente de títulos en un componente puntual */
 @layer utilities {
   .font-display {
     font-family: var(--font-display), ui-sans-serif, system-ui;
   }
-  /* barra/punto que cruza de izq → der */
+
+  /* Scanner Divider */
   @keyframes kudu-scan {
     0%   { left: -10%; opacity: .95; }
     50%  { opacity: 1; }
     100% { left: 110%; opacity: .95; }
   }
   .kudu-scan {
-    animation: kudu-scan 7s linear infinite; /* velocidad */
+    animation: kudu-scan 7s linear infinite;
     will-change: left, opacity;
   }
-
 }
-/* ===== Divider Glow ===== */
 
-/* === Divider Scanner (barra de luz que no deja rastro) === */
-/* === Divider scanner en movimiento (sin rastro) === */
+/* ===== Divider Glow ===== */
 @keyframes scan-left {
   0%   { left: -10%; opacity: .95; }
   50%  { opacity: 1; }
   100% { left: 110%; opacity: .95; }
 }
 .animate-scan-left {
-  animation: scan-left 3s linear infinite; /* velocidad: subí a 8–10s si querés más lento */
+  animation: scan-left 3s linear infinite;
   will-change: left, opacity;
 }
 @media (prefers-reduced-motion: reduce) {
   .animate-scan-left { animation: none; }
 }
-
-
-

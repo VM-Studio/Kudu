@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Categories from "@/components/sections/Categories";
 import DividerGlow from "@/components/DividerGlow";
+import HeroInicio from "@/components/sections/HeroInicio";
 
 // Cargamos el Hero 3D sólo en cliente
 const Hero3D = dynamic(() => import("@/components/3d/Hero3D"), { ssr: false });
@@ -12,7 +12,7 @@ export default function Home() {
     <div>
       <Hero3D />
       <DividerGlow /> 
-      <Categories />
+      <HeroInicio />
     </div>
   );
 }

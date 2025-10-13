@@ -1,197 +1,347 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Suspense } from "react";
-import { Outfit } from "next/font/google"; // 👈 Fuente para títulos
+import { Outfit, Montserrat_Alternates } from "next/font/google";
+
+const outfit = Outfit({ subsets: ["latin"], display: "swap" });
+const montAlt = Montserrat_Alternates({
+  subsets: ["latin"],
+  weight: ["800"],
+  display: "swap",
+});
 
 export default function Hero3D() {
+  const [muted, setMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio(
+      "https://cdn.freesound.org/previews/378/378085_6260145-lq.mp3"
+    );
+    if (audioRef.current) audioRef.current.muted = muted;
+  }, []);
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.muted = muted;
+  }, [muted]);
+
+  const press = (id: string) => {
+    document.getElementById(id)?.setAttribute("data-pressed", "true");
+    if (!muted && audioRef.current) {
+      audioRef.current.currentTime = 0;
+      void audioRef.current.play().catch(() => {});
+    }
+  };
+  const release = (id: string) =>
+    document.getElementById(id)?.removeAttribute("data-pressed");
+
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto max-w-6xl px-4 pt-12 pb-10 grid gap-8 md:gap-12 md:grid-cols-2">
-        {/* 1) TÍTULO — CENTRADO A NIVEL PÁGINA (ocupa las 2 columnas) */}
-        <div className="w-full md:col-span-2 flex justify-center">
-          <h1 className="text-center text-[clamp(36px,5.5vw,866px)] font-extrabold leading-[1.05] tracking-[-0.01em] text-[#233265]">
-            Electrodomésticos
+      {/* Fondo con transparencia desde /public */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 opacity-20"
+        style={{
+          backgroundImage: "url(/background.png)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+
+      {/* Hero compacto */}
+      <div className="mx-auto max-w-6xl px-4 pt-2 pb-4 grid md:grid-cols-2 items-center gap-3">
+        {/* IZQUIERDA — KUDU grande, cerca del keypad */}
+        <div className="flex flex-col justify-center md:pr-2">
+          <h1
+            className={`${montAlt.className} leading-[0.9] tracking-tight text-[#63798a] 
+            text-[clamp(92px,12.5vw,228px)]`}
+          >
+            <motion.span
+              className="relative inline-block align-middle"
+              style={{ transformStyle: "preserve-3d" }}
+              animate={{ rotateY: 360 }}
+              transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+              aria-label="K de KUDU girando"
+            >
+              <span className="block" style={{ backfaceVisibility: "hidden" }}>
+                K
+              </span>
+              <span
+                className="block absolute inset-0"
+                style={{
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                }}
+              >
+                K
+              </span>
+            </motion.span>
+            <span className="align-middle">UDU</span>
           </h1>
         </div>
 
-        {/* 2) IZQUIERDA — Tarjeta 3D */}
-        <div className="md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-3">
-          <div className="h-[320px] md:h-[360px] rounded-[28px] md:rounded-[36px] bg-gradient-to-br from-white to-[#233265]/25 ring-1 ring-black/5 shadow-[0_28px_70px_-25px_rgba(35,50,101,0.45)]">
-            <Suspense fallback={<div className="h-full" />}>
-              <Canvas camera={{ position: [0, 0, 5], fov: 48 }}>
-                <ambientLight intensity={0.55} />
-                <directionalLight position={[3, 3, 5]} intensity={0.75} />
-                <Html center>
-                  <div className="select-none pointer-events-none">
-                    <h2 className="font-extrabold tracking-tight text-[#233265] leading-none whitespace-nowrap text-[clamp(72px,9vw,180px)]">
-                      <motion.span
-                        className="relative inline-block align-middle"
-                        style={{ transformStyle: "preserve-3d" }}
-                        animate={{ rotateY: 360 }}
-                        transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-                      >
-                        <span className="block" style={{ backfaceVisibility: "hidden" }}>K</span>
-                        <span className="block absolute inset-0" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-                          K
-                        </span>
-                      </motion.span>
-                      <span className="align-middle">UDU</span>
-                    </h2>
-                  </div>
-                </Html>
-              </Canvas>
-            </Suspense>
-          </div>
-        </div>
+        {/* DERECHA — Keypad 3D */}
+        <div className="relative md:ml-auto md:translate-x-2">
+          <div className="keypad opacity-0 will-change-transform select-none [transform-style:preserve-3d] relative aspect-[400/310] w-[min(420px,38vw)]">
+            {/* Base */}
+            <div className="keypad__base absolute bottom-0 w-full">
+              <img
+                src="https://assets.codepen.io/605876/keypad-base.png?format=auto&quality=86"
+                alt=""
+                className="w-full"
+              />
+            </div>
 
-        {/* 3) DERECHA — Subtítulo + botones + orbes */}
-        <div className="md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-3 mx-auto md:mx-0 max-w-2xl flex flex-col justify-start text-center md:text-left">
-          <p className="text-[clamp(16px,2.2vw,18px)] text-zinc-600 leading-relaxed">
-            Extractores, campanas, purificadores y anafes con performance y estética elegante.
-          </p>
+            {/* SINGLE izquierda — INICIO */}
+            <button
+              id="key-inicio"
+              type="button"
+              className="key keypad__single keypad__single--left"
+              onPointerDown={() => press("key-inicio")}
+              onPointerUp={() => release("key-inicio")}
+              onPointerLeave={() => release("key-inicio")}
+              aria-label="Inicio"
+              style={
+                {
+                  "--travel": "24",
+                  "--key-color": "#586c7a",
+                  // plano + offsets: MÁS ARRIBA y a la IZQUIERDA
+                  "--pw": "66%",
+                  "--ph": "50%",
+                  "--ox": "-5%",   // antes 9%
+                  "--oy": "-58%", // antes -6%
+                } as React.CSSProperties
+              }
+            >
+              <span className="key__content">
+                <span className="key__centerplane">
+                  <span className="key__label">Inicio</span>
+                </span>
+                <img
+                  src="https://assets.codepen.io/605876/keypad-single.png?format=auto&quality=86"
+                  alt=""
+                />
+                <span className="key__tint" />
+              </span>
+            </button>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3">
+            {/* SINGLE derecha — WHATSAPP */}
             <a
+              id="key-wpp"
               href="https://wa.me/XXXXXXXXXXX"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#233265] text-white text-[15px] font-medium shadow-[0_10px_30px_-12px_rgba(35,50,101,0.35)] hover:bg-[#1e2a57] transition"
-              aria-label="Contactar por WhatsApp"
+              className="key keypad__single"
+              onPointerDown={() => press("key-wpp")}
+              onPointerUp={() => release("key-wpp")}
+              onPointerLeave={() => release("key-wpp")}
+              aria-label="WhatsApp"
+              style={
+                {
+                  "--travel": "24",
+                  "--key-color": "#586c7a",
+                  "--pw": "60%",
+                  "--ph": "60%",
+                  "--ox": "-4%",  // antes 6%
+                  "--oy": "-40%",  // antes -5%
+                } as React.CSSProperties
+              }
             >
-              <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-                <path d="M19.11 17.2c-.28-.14-1.66-.82-1.92-.91-.26-.1-.45-.14-.64.14-.19.27-.74.91-.91 1.1-.17.18-.34.21-.62.07-.28-.14-1.2-.44-2.3-1.4-.85-.75-1.42-1.67-1.59-1.95-.17-.27-.02-.42.13-.57.14-.14.32-.37.48-.55.16-.18.21-.3.32-.5.11-.2.06-.36-.03-.5-.1-.14-.64-1.53-.88-2.09-.23-.56-.47-.48-.64-.49l-.55-.01c-.2 0-.5.07-.76.36s-1 1-1 2.42 1.02 2.8 1.16 2.99c.14.19 2.01 3.06 4.88 4.29.68.29 1.2.46 1.61.58.68.22 1.3.19 1.79.12.55-.08 1.66-.68 1.9-1.34.24-.66.24-1.22.17-1.34-.07-.12-.25-.19-.53-.33zM26.67 5.33A13.3 13.3 0 0 0 16 1.33 13.34 13.34 0 0 0 2.67 14.69c0 2.36.63 4.17 1.71 5.96L2 30.67l10.27-2.69c1.74.64 3.36.98 5.06.98A13.33 13.33 0 0 0 30.67 16c0-3.56-1.38-6.9-4-9.33zM16 27.47c-1.56 0-3.09-.33-4.53-.93l-.33-.14-6.09 1.6 1.62-5.93-.17-.31a11.53 11.53 0 1 1 9.5 5.71z"/>
-              </svg>
-              WhatsAppp
+              <span className="key__content">
+                <span className="key__centerplane">
+                  <svg viewBox="0 0 32 32" className="key__icon" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M19.11 17.2c-.28-.14-1.66-.82-1.92-.91-.26-.1-.45-.14-.64.14-.19.27-.74.91-.91 1.1-.17.18-.34.21-.62.07-.28-.14-1.2-.44-2.3-1.4-.85-.75-1.42-1.67-1.59-1.95-.17-.27-.02-.42.13-.57.14-.14.32-.37.48-.55.16-.18.21-.3.32-.5.11-.2.06-.36-.03-.5-.1-.14-.64-1.53-.88-2.09-.23-.56-.47-.48-.64-.49l-.55-.01c-.2 0-.5.07-.76.36s-1 1-1 2.42 1.02 2.8 1.16 2.99c.14.19 2.01 3.06 4.88 4.29.68.29 1.2.46 1.61.58.68.22 1.3.19 1.79.12.55-.08 1.66-.68 1.9-1.34.24-.66.24-1.22.17-1.34-.07-.12-.25-.19-.53-.33zM26.67 5.33A13.3 13.3 0 0 0 16 1.33 13.34 13.34 0 0 0 2.67 14.69c0 2.36.63 4.17 1.71 5.96L2 30.67l10.27-2.69c1.74.64 3.36.98 5.06.98A13.33 13.33 0 0 0 30.67 16c0-3.56-1.38-6.9-4-9.33zM16 27.47c-1.56 0-3.09-.33-4.53-.93l-.33-.14-6.09 1.6 1.62-5.93-.17-.31a11.53 11.53 0 1 1 9.5 5.71z"
+                    />
+                  </svg>
+                </span>
+                <img
+                  src="https://assets.codepen.io/605876/keypad-single.png?format=auto&quality=86"
+                  alt=""
+                />
+                <span className="key__tint" />
+              </span>
             </a>
 
+            {/* DOUBLE — VER CATÁLOGO */}
             <a
+              id="key-catalogo"
               href="/catalogo"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#233265] text-white text-[15px] font-medium shadow-[0_10px_30px_-12px_rgba(35,50,101,0.35)] hover:bg-[#1e2a57] transition"
+              className="key keypad__double"
+              onPointerDown={() => press("key-catalogo")}
+              onPointerUp={() => release("key-catalogo")}
+              onPointerLeave={() => release("key-catalogo")}
+              aria-label="Ver Catálogo"
+              style={
+                {
+                  "--travel": "18",
+                  "--key-color": "#477e77",
+                  "--pw": "80%",
+                  "--ph": "58%",
+                  "--ox": "-3%",    // antes 11%
+                  "--oy": "-35%",  // antes -7%
+                } as React.CSSProperties
+              }
             >
-              Ver catálogo
+              <span className="key__content">
+                <span className="key__centerplane">
+                  <span className="key__label">Ver Catálogo</span>
+                </span>
+                <img
+                  src="https://assets.codepen.io/605876/keypad-double.png?format=auto&quality=86"
+                  alt=""
+                />
+                <span className="key__tint" />
+              </span>
             </a>
           </div>
 
-          {/* ORBES decorativos — una sola fila, debajo de los botones */}
-          <div className="mt-6 md:mt-8">
-            <div className="w-full">
-              <div className="flex items-start justify-between gap-2 sm:gap-4">
-                {/* EXTRACTORES */}
-                <figure className="group flex flex-col items-center text-center w-16 sm:w-20">
-                  <div
-                    className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full ring-1 ring-white/50 overflow-hidden shadow-[0_30px_50px_-24px_rgba(0,0,0,.35)] backdrop-blur-md animate-[float_6s_ease-in-out_infinite]"
-                    style={{ background: "radial-gradient(120% 120% at 30% 25%,rgba(255,255,255,.9) 0%,rgba(255,255,255,.6) 35%,rgba(19,36,75,.25) 70%,rgba(19,36,75,.6) 100%)" }}
-                  >
-                    <div className="absolute -top-2 left-2 h-5 w-9 sm:h-8 sm:w-16 rounded-full bg-white/60 blur-xl" />
-                    <div className="absolute right-3 bottom-3 h-1.5 w-1.5 rounded-full bg-white/70 blur-[2px]" />
-                    <div className="absolute inset-0 rounded-full ring-1 ring-white/30" />
-                    <svg viewBox="0 0 64 64" className="absolute inset-0 m-auto h-8 w-8 sm:h-14 sm:w-14 drop-shadow">
-                      <defs>
-                        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0" stopColor="white" stopOpacity=".95" />
-                          <stop offset="1" stopColor="#cfd8ea" stopOpacity=".9" />
-                        </linearGradient>
-                      </defs>
-                      <circle cx="32" cy="32" r="4.5" fill="#102347" opacity=".95" />
-                      <path d="M32 12c4 0 8 3 8 7 0 2-1 4-3 6-2 2-5 3-5 3s-1-3-3-5c-2-2-4-3-6-3-4 0-7-4-7-8 0-3 3-6 7-6 3 0 6 2 9 6Z" fill="url(#g1)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <path d="M52 32c0 4-3 8-7 8-2 0-4-1-6-3-2-2-3-5-3-5s3-1 5-3c2-2 3-4 3-6 0-4 4-7 8-7 3 0 6 3 6 7 0 3-2 6-6 9Z" fill="url(#g1)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <path d="M32 52c-4 0-8-3-8-7 0-2 1-4 3-6 2-2 5-3 5-3s1 3 3 5c2 2 4 3 6 3 4 0 7 4 7 8 0 3-3 6-7 6-3 0-6-2-9-6Z" fill="url(#g1)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <path d="M12 32c0-4 3-8 7-8 2 0 4 1 6 3 2 2 3 5 3 5s-3 1-5 3c-2 2-3 4-3 6 0 4-4 7-8 7-3 0-6-3-6-7 0-3 2-6 6-9Z" fill="url(#g1)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                    </svg>
-                  </div>
-                  <figcaption className="mt-1 text-[11px] sm:text-xs font-semibold text-[#102347]">Extractores</figcaption>
-                  <div className="mt-1 h-[6px] w-12 sm:w-16 rounded-full bg-black/10 blur-[5px]" />
-                </figure>
-
-                {/* CAMPANAS */}
-                <figure className="group flex flex-col items-center text-center w-16 sm:w-20">
-                  <div
-                    className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full ring-1 ring-white/50 overflow-hidden shadow-[0_30px_50px_-24px_rgba(0,0,0,.35)] backdrop-blur-md animate-[float_6s_ease-in-out_infinite]"
-                    style={{ background: "radial-gradient(120% 120% at 30% 25%,rgba(255,255,255,.9) 0%,rgba(255,255,255,.6) 35%,rgba(19,36,75,.25) 70%,rgba(19,36,75,.6) 100%)" }}
-                  >
-                    <div className="absolute -top-2 left-2 h-5 w-9 sm:h-8 sm:w-16 rounded-full bg-white/60 blur-xl" />
-                    <div className="absolute inset-0 rounded-full ring-1 ring-white/30" />
-                    <svg viewBox="0 0 64 64" className="absolute inset-0 m-auto h-8 w-8 sm:h-14 sm:w-14 drop-shadow">
-                      <defs>
-                        <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0" stopColor="white" stopOpacity=".95" />
-                          <stop offset="1" stopColor="#cfd8ea" stopOpacity=".9" />
-                        </linearGradient>
-                      </defs>
-                      <rect x="28" y="12" width="8" height="12" rx="1.5" fill="url(#g2)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <path d="M16 26h32v14a6 6 0 0 1-6 6H22a6 6 0 0 1-6-6V26Z" fill="url(#g2)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <path d="M24 44v6M32 44v6M40 44v6" stroke="#102347" strokeWidth="2" strokeLinecap="round" opacity=".9" />
-                    </svg>
-                  </div>
-                  <figcaption className="mt-1 text-[11px] sm:text-xs font-semibold text-[#102347]">Campanas</figcaption>
-                  <div className="mt-1 h-[6px] w-12 sm:w-16 rounded-full bg-black/10 blur-[5px]" />
-                </figure>
-
-                {/* PURIFICADORES */}
-                <figure className="group flex flex-col items-center text-center w-16 sm:w-20">
-                  <div
-                    className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full ring-1 ring-white/50 overflow-hidden shadow-[0_30px_50px_-24px_rgba(0,0,0,.35)] backdrop-blur-md animate-[float_6s_ease-in-out_infinite]"
-                    style={{ background: "radial-gradient(120% 120% at 30% 25%,rgba(255,255,255,.9) 0%,rgba(255,255,255,.6) 35%,rgba(19,36,75,.25) 70%,rgba(19,36,75,.6) 100%)" }}
-                  >
-                    <div className="absolute -top-2 left-2 h-5 w-9 sm:h-8 sm:w-16 rounded-full bg-white/60 blur-xl" />
-                    <div className="absolute inset-0 rounded-full ring-1 ring-white/30" />
-                    <svg viewBox="0 0 64 64" className="absolute inset-0 m-auto h-8 w-8 sm:h-14 sm:w-14 drop-shadow">
-                      <defs>
-                        <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0" stopColor="white" stopOpacity=".95" />
-                          <stop offset="1" stopColor="#cfd8ea" stopOpacity=".9" />
-                        </linearGradient>
-                      </defs>
-                      <rect x="16" y="20" width="32" height="6" rx="2.5" fill="url(#g3)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <rect x="16" y="30" width="32" height="6" rx="2.5" fill="url(#g3)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <rect x="16" y="40" width="32" height="6" rx="2.5" fill="url(#g3)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <circle cx="22" cy="17" r="1.4" fill="#102347" opacity=".9" />
-                      <circle cx="42" cy="17" r="1.2" fill="#102347" opacity=".8" />
-                      <circle cx="32" cy="52" r="1.2" fill="#102347" opacity=".8" />
-                    </svg>
-                  </div>
-                  <figcaption className="mt-1 text-[11px] sm:text-xs font-semibold text-[#102347]">Purificadores</figcaption>
-                  <div className="mt-1 h-[6px] w-12 sm:w-16 rounded-full bg-black/10 blur-[5px]" />
-                </figure>
-
-                {/* ANAFES */}
-                <figure className="group flex flex-col items-center text-center w-16 sm:w-20">
-                  <div
-                    className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full ring-1 ring-white/50 overflow-hidden shadow-[0_30px_50px_-24px_rgba(0,0,0,.35)] backdrop-blur-md animate-[float_6s_ease-in-out_infinite]"
-                    style={{ background: "radial-gradient(120% 120% at 30% 25%,rgba(255,255,255,.9) 0%,rgba(255,255,255,.6) 35%,rgba(19,36,75,.25) 70%,rgba(19,36,75,.6) 100%)" }}
-                  >
-                    <div className="absolute -top-2 left-2 h-5 w-9 sm:h-8 sm:w-16 rounded-full bg-white/60 blur-xl" />
-                    <div className="absolute inset-0 rounded-full ring-1 ring-white/30" />
-                    <svg viewBox="0 0 64 64" className="absolute inset-0 m-auto h-8 w-8 sm:h-14 sm:w-14 drop-shadow">
-                      <defs>
-                        <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0" stopColor="white" stopOpacity=".95" />
-                          <stop offset="1" stopColor="#cfd8ea" stopOpacity=".9" />
-                        </linearGradient>
-                      </defs>
-                      <rect x="14" y="16" width="36" height="32" rx="4" fill="url(#g4)" stroke="#102347" strokeWidth="1.5" opacity=".95" />
-                      <circle cx="24" cy="24" r="5.5" fill="none" stroke="#102347" strokeWidth="1.8" />
-                      <circle cx="40" cy="24" r="5.5" fill="none" stroke="#102347" strokeWidth="1.8" />
-                      <circle cx="24" cy="40" r="5.5" fill="none" stroke="#102347" strokeWidth="1.8" />
-                      <circle cx="40" cy="40" r="5.5" fill="none" stroke="#102347" strokeWidth="1.8" />
-                      <circle cx="52" cy="52" r="3" fill="#102347" opacity=".9" />
-                    </svg>
-                  </div>
-                  <figcaption className="mt-1 text-[11px] sm:text-xs font-semibold text-[#102347]">Anafes</figcaption>
-                  <div className="mt-1 h-[6px] w-12 sm:w-16 rounded-full bg-black/10 blur-[5px]" />
-                </figure>
-              </div>
-            </div>
+          {/* Mutear click */}
+          <div className="mt-3 flex items-center gap-2 text-sm text-[#0f2a55]/80">
+            <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                className="h-4 w-4 accent-[#2b6cb0]"
+                checked={muted}
+                onChange={(e) => setMuted(e.target.checked)}
+              />
+              Mutear click
+            </label>
           </div>
         </div>
       </div>
 
-      {/* keyframes para la animación de flotado */}
-      <style jsx global>{`
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+      {/* Estilos: centrado perfecto en perspectiva */}
+      <style jsx>{`
+        .keypad {
+          transition: translate 0.26s ease-out, transform 0.26s ease-out,
+            opacity 0.26s ease-out;
+          transform-style: preserve-3d;
+          opacity: 1;
+        }
+        .key,
+        .keypad__base {
+          transition: translate 0.26s ease-out;
+        }
+        .key {
+          position: absolute;
+          transform-style: preserve-3d;
+          border: 0;
+          background: transparent;
+          padding: 0;
+          cursor: pointer;
+          outline: none;
+          color: hsl(210 80% 95%);
+        }
+        .key .key__content {
+          width: 100%;
+          height: 100%;
+          display: inline-block;
+          transition: translate 0.12s ease-out;
+          position: relative;
+          container-type: inline-size;
+        }
+        .key img {
+          width: 100%;
+          height: auto;
+          display: block;
+          transition: translate 0.12s ease-out;
+        }
+
+        /* Tinte de color */
+        .key .key__tint {
+          position: absolute;
+          inset: 0;
+          background: var(--key-color);
+          mix-blend-mode: color;
+          pointer-events: none;
+        }
+
+        /* Plano centrado (cara superior) */
+        .key .key__centerplane {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: var(--pw, 70%);
+          height: var(--ph, 52%);
+          transform:
+            translate(calc(-50% + var(--ox, 0%)), calc(-50% + var(--oy, 0%)))
+            rotateX(36deg) rotateY(45deg) rotateX(-90deg);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          will-change: transform;
+        }
+
+        .key .key__label {
+          font-weight: 800;
+          letter-spacing: -0.01em;
+          font-size: 11.8cqi;
+          line-height: 1.05;
+          color: hsl(210 80% 95%);
+          white-space: nowrap;
+        }
+        .key .key__icon { width: 100%; height: 100%; color: hsl(210 80% 95%); }
+
+        /* Hundido al presionar */
+        .key[data-pressed="true"] .key__content,
+        .key:active .key__content {
+          translate: 0 calc(var(--travel, 20) * 1%);
+        }
+
+        /* Geometrías/máscaras */
+        .keypad__single {
+          width: 40.5%;
+          left: 54%;
+          bottom: 36%;
+          height: 46%;
+          clip-path: polygon(
+            0 0,
+            54% 0,
+            89% 24%,
+            100% 70%,
+            54% 100%,
+            46% 100%,
+            0 69%,
+            12% 23%,
+            47% 0%
+          );
+          -webkit-mask: url(https://assets.codepen.io/605876/keypad-single.png?format=auto&quality=86)
+            50% 50% / 100% 100%;
+          mask: url(https://assets.codepen.io/605876/keypad-single.png?format=auto&quality=86)
+            50% 50% / 100% 100%;
+        }
+        .keypad__single--left {
+          left: 29.3%;
+          bottom: 54.2%;
+        }
+        .keypad__double {
+          width: 64%;
+          height: 65%;
+          left: 6%;
+          bottom: 17.85%;
+          clip-path: polygon(
+            34% 0,
+            93% 44%,
+            101% 78%,
+            71% 100%,
+            66% 100%,
+            0 52%,
+            0 44%,
+            7% 17%,
+            30% 0
+          );
+          -webkit-mask: url(https://assets.codepen.io/605876/keypad-double.png?format=auto&quality=86)
+            50% 50% / 100% 100%;
+          mask: url(https://assets.codepen.io/605876/keypad-double.png?format=auto&quality=86)
+            50% 50% / 100% 100%;
+        }
+
+        @media (max-width: 768px) {
+          .keypad { width: min(380px, 92vw); }
+        }
       `}</style>
     </section>
   );
