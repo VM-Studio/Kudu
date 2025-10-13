@@ -42,8 +42,8 @@ export default function CatalogoPage() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
       {/* Título */}
-      <h1 className="text-center text-7xl font-extrabold tracking-tight text-slate-900">
-        Catálogo
+      <h1 className="text-center text-5xl font-extrabold tracking-tight text-slate-900">
+        Nuestro Catálogo
       </h1>
 
       {/* Barra de filtrado */}
@@ -90,9 +90,7 @@ export default function CatalogoPage() {
               </div>
 
               {/* Nombre + descripción */}
-              <h3 className="mt-5 text-center text-xl font-extrabold tracking-tight text-slate-900">
-                {p.name.toUpperCase()}
-              </h3>
+              
               <p className="mt-2 max-w-xs text-center text-sm leading-5 text-slate-600">
                 {p.description}
               </p>

@@ -1,45 +1,217 @@
 [
     {
-      "id": "ext-90-01",
-      "name": "Extractor Axial 6” KUDU",
-      "description": "Extractor axial para pared. Caudal alto y bajo ruido.",
-      "image": "/extractores.png",
+      "id": "KU.EX4.BL",
+      "name": "Extractor de Aire 4\" Blanco",
+      "description": "12W, frente ABS, motor silencioso en buje, 80 m³/h, bajo consumo.",
+      "image": "/productos/extractor1.png",
       "category": "Extractores"
     },
     {
-      "id": "cam-90-01",
-      "name": "Campana 90 cm Inox",
-      "description": "Campana decorativa de 90 cm con 3 velocidades y luz LED.",
-      "image": "/campana.png",
+      "id": "KU.EX4.CR",
+      "name": "Extractor de Aire 4\" Cromado / Grafito / Cobre",
+      "description": "12W, frente ABS, motor silencioso en buje, 80 m³/h, bajo consumo.",
+      "image": "/productos/extractor2.png",
+      "category": "Extractores"
+    },
+    {
+      "id": "KU.EX4.BLP",
+      "name": "Extractor de Aire 4\" Blanco Potenciado",
+      "description": "19W, frente ABS, motor silencioso en buje, 190 m³/h, bajo consumo.",
+      "image": "/productos/extractor3.png",
+      "category": "Extractores"
+    },
+    {
+      "id": "KU.EX6.BL",
+      "name": "Extractor de Aire 6\" Blanco",
+      "description": "19W, frente ABS, motor silencioso en buje, 190 m³/h, bajo consumo.",
+      "image": "/productos/extractor4.png",
+      "category": "Extractores"
+    },
+    {
+      "id": "KU.EX6.CR",
+      "name": "Extractor de Aire 6\" Cromado / Grafito / Cobre",
+      "description": "19W, frente ABS, motor silencioso en buje, 190 m³/h, bajo consumo.",
+      "image": "/productos/extractor5.png",
+      "category": "Extractores"
+    },
+    {
+      "id": "KU.EX10.BL",
+      "name": "Extractor de Aire 10\" Blanco",
+      "description": "50W, motor potenciado, giro reversible, ideal cocina, 1200 m³/h, motor a rulemán.",
+      "image": "/productos/extractor6.png",
+      "category": "Extractores"
+    },
+    {
+      "id": "KU-HA100G",
+      "name": "Forzador de Aire a Rulemán 4\"",
+      "description": "Motor a rulemán, caudal 550 m³/h, bajo consumo, 220V 50Hz, 0.30A. Fácil instalación.",
+      "image": "/productos/extractor7.png",
+      "category": "Extractores"
+    },
+  
+    {
+      "id": "KU-MI50-CR",
+      "name": "Campana Empotrable MILOS 52 cm",
+      "description": "130W, 1 motor, 3 velocidades, filtro de aluminio, 500 m³/h.",
+      "image": "/productos/campana1.png",
       "category": "Campanas"
     },
     {
-      "id": "pur-60-01",
-      "name": "Purificador Slim 60 cm",
-      "description": "Purificador con filtros lavables y recirculación.",
-      "image": "/purificador.png",
+      "id": "KU-CC60SS-60",
+      "name": "Campana CRETA 60 cm (SS)",
+      "description": "65W, 3 velocidades, 1×2W LED, 2 filtros aluminio (5 capas), 2 chimeneas 2×400 mm.",
+      "image": "/productos/campana2.png",
+      "category": "Campanas"
+    },
+    {
+      "id": "KU-CC60NG",
+      "name": "Campana CRETA 60 cm (NG)",
+      "description": "65W, 3 velocidades, 1×2W LED, 2 filtros aluminio (5 capas), 2 chimeneas 2×400 mm.",
+      "image": "/productos/campana3.png",
+      "category": "Campanas"
+    },
+    {
+      "id": "KU-CC60SS-90",
+      "name": "Campana CRETA 90 cm (SS)",
+      "description": "65W, 3 velocidades, 1×2W LED, 2 filtros aluminio (5 capas), 2 chimeneas.",
+      "image": "/productos/campana4.png",
+      "category": "Campanas"
+    },
+    {
+      "id": "KU-CM60SS",
+      "name": "Campana RODAS 60 cm (SS)",
+      "description": "Absorción 500 m³/h, chimenea doble 2×500 mm, LED 1×2W, 2 filtros aluminio 5 capas, 3 velocidades.",
+      "image": "/productos/campana5.png",
+      "category": "Campanas"
+    },
+    {
+      "id": "KU-CM60NG",
+      "name": "Campana RODAS 60 cm (NG)",
+      "description": "Absorción 500 m³/h, chimenea doble 2×500 mm, LED 1×2W, 2 filtros aluminio 5 capas, 3 velocidades.",
+      "image": "/productos/campana6.png",
+      "category": "Campanas"
+    },
+    {
+      "id": "KU-CM60SMNG",
+      "name": "Campana RODAS 60 cm Digital",
+      "description": "Absorción 380 m³/h, chimenea doble 2×500 mm, LED 1×2W, 2 filtros aluminio 5 capas, 3 velocidades.",
+      "image": "/productos/campana7.png",
+      "category": "Campanas"
+    },
+    {
+      "id": "KU-CM90SMNG",
+      "name": "Campana RODAS 90 cm Digital",
+      "description": "Absorción 380 m³/h, chimenea doble, LED 1×2W, 2 filtros aluminio 5 capas, 3 velocidades.",
+      "image": "/productos/campana8.png",
+      "category": "Campanas"
+    },
+  
+    {
+      "id": "KU.PU601.BL",
+      "name": "Purificador 1 Motor (Blanco)",
+      "description": "150W, 3 velocidades, filtro de aluminio y carbón, motor en buje, 250 m³/h.",
+      "image": "/productos/purificador1.png",
       "category": "Purificadores"
     },
     {
-      "id": "ana-60-01",
-      "name": "Anafe Vitrocerámico 4H",
-      "description": "Superficie de vidrio templado, control táctil.",
-      "image": "/next.svg",
+      "id": "KU.PU601.SS",
+      "name": "Purificador 1 Motor (Acero)",
+      "description": "150W, 3 velocidades, filtro de aluminio y carbón, motor en buje, 250 m³/h.",
+      "image": "/productos/purificador2.png",
+      "category": "Purificadores"
+    },
+    {
+      "id": "KU.PU601.NG",
+      "name": "Purificador 1 Motor (Negro)",
+      "description": "150W, 3 velocidades, filtro de aluminio y carbón, motor en buje, 250 m³/h.",
+      "image": "/productos/purificador3.png",
+      "category": "Purificadores"
+    },
+    {
+      "id": "KU.PU602.BL",
+      "name": "Purificador 2 Motores (Blanco)",
+      "description": "260W, 2 motores, 3 velocidades, filtro aluminio y carbón, motor en buje, 500 m³/h.",
+      "image": "/productos/purificador4.png",
+      "category": "Purificadores"
+    },
+    {
+      "id": "KU.PU602.SS",
+      "name": "Purificador 2 Motores (Acero)",
+      "description": "260W, 2 motores, 3 velocidades, filtro aluminio y carbón, motor en buje, 500 m³/h.",
+      "image": "/productos/purificador5.png",
+      "category": "Purificadores"
+    },
+    {
+      "id": "KU-PU601.BL",
+      "name": "Purificador Digital 1 Motor (Blanco)",
+      "description": "150W, 3 velocidades, filtro de aluminio y carbón, motor en buje, 250 m³/h.",
+      "image": "/productos/purificador6.png",
+      "category": "Purificadores"
+    },
+    {
+      "id": "KU.PU701.SS",
+      "name": "Purificador Extensible (Acero)",
+      "description": "110W, 1 motor, 2 velocidades, filtro aluminio y carbón, motor en buje, 340 m³/h.",
+      "image": "/productos/purificador7.png",
+      "category": "Purificadores"
+    },
+    {
+      "id": "KU.PU701.ng",
+      "name": "Purificador Extensible (NG)",
+      "description": "110W, 1 motor, 2 velocidades, filtro aluminio y carbón, motor en buje, 340 m³/h.",
+      "image": "/productos/purificador8.png",
+      "category": "Purificadores"
+    },
+  
+    {
+      "id": "KU-AE-2500-SS",
+      "name": "Anafe Eléctrico Acero 2 Hornallas (Empotrar y Apoyo)",
+      "description": "50×32×6 cm. Hot Plate 2.500W: 1 hornalla 1000W (15.5 cm) + 1 hornalla 1500W (18.5 cm).",
+      "image": "/productos/anafe1.png",
       "category": "Anafes"
     },
     {
-      "id": "cam-60-02",
-      "name": "Campana 60 cm Inox",
-      "description": "Campana de pared, motor eficiente, LED.",
-      "image": "/campana.png",
-      "category": "Campanas"
+      "id": "KU-AG301-SS",
+      "name": "Anafe a Gas 2 Hornallas (Acero Inox.)",
+      "description": "Empotrable, encendido automático por perillas, base de fundición, válvula de seguridad.",
+      "image": "/productos/anafe2.png",
+      "category": "Anafes"
     },
     {
-      "id": "ext-10-01",
-      "name": "Extractor Centrífugo 10”",
-      "description": "Para cañería larga, ideal cocinas y baños amplios.",
-      "image": "/extractores.png",
-      "category": "Extractores"
+      "id": "KU-AG01-SS",
+      "name": "Anafe a Gas 4 Hornallas (Acero Inox.)",
+      "description": "Empotrable, encendido automático por perillas, base de fundición, válvula de seguridad.",
+      "image": "/productos/anafe3.png",
+      "category": "Anafes"
+    },
+    {
+      "id": "KU-AV3001-NG",
+      "name": "Anafe Vitrocerámico 1 Hornalla",
+      "description": "2000W, 5 niveles de cocción, bloqueo de seguridad.",
+      "image": "/productos/anafe4.png",
+      "category": "Anafes"
+    },
+    {
+      "id": "KU-AV2H",
+      "name": "Anafe Vitrocerámico 2 Hornallas",
+      "description": "Vitrocerámico de 2 zonas de cocción.",
+      "image": "/productos/anafe5.png",
+      "category": "Anafes"
+    },
+    {
+      "id": "KU-AV4H",
+      "name": "Anafe Vitrocerámico 4 Hornallas",
+      "description": "Vitrocerámico de 4 zonas de cocción.",
+      "image": "/productos/anafe6.png",
+      "category": "Anafes"
+    },
+    {
+      "id": "HORNO-EMP",
+      "name": "Horno De Mesa",
+      "description": "Próximamente.",
+      "image": "/productos/anafe7.png",
+      "category": "Cocción",
+      "comingSoon": true
     }
   ]
   
