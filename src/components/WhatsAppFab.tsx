@@ -7,16 +7,16 @@ type Props = {
   phone: string;
   /** Mensaje inicial opcional */
   message?: string;
-  /** UTM opcional para Analytics */
+  /** UTM opcional para Analytics (ej. "utm_source=web...") */
   utm?: string;
 };
 
 export default function WhatsAppFab({ phone, message, utm }: Props) {
   const href = useMemo(() => {
-    const base = new URL(`https://wa.me/${phone}`);
-    if (message) base.searchParams.set('text', message);
-    if (utm) base.search = (base.search ? base.search + '&' : '?') + utm;
-    return base.toString();
+    const url = new URL(`https://wa.me/${phone}`);
+    if (message) url.searchParams.set('text', message);
+    if (utm) url.search = (url.search ? url.search + '&' : '?') + utm;
+    return url.toString();
   }, [phone, message, utm]);
 
   return (
@@ -29,30 +29,26 @@ export default function WhatsAppFab({ phone, message, utm }: Props) {
         fixed z-[999]
         right-4 bottom-4 md:right-6 md:bottom-6
         inline-flex items-center justify-center
-        h-16 w-16 md:h-18 md:w-18       /* ← un poquito más grande */
+        h-16 w-16 md:h-[72px] md:w-[72px]   /* un toque más grande */
         rounded-full bg-[#25D366] text-white
-        shadow-[0_14px_34px_-12px_rgba(0,0,0,.5)]
+        shadow-[0_18px_40px_-16px_rgba(0,0,0,.6)]
         hover:brightness-95 active:brightness-90
         focus:outline-none focus-visible:ring-4 focus-visible:ring-white/60
         transition
       "
       style={{
-        bottom: 'max(1rem, env(safe-area-inset-bottom))',
-        right: 'max(1rem, env(safe-area-inset-right))',
+        bottom: 'max(16px, env(safe-area-inset-bottom))',
+        right: 'max(16px, env(safe-area-inset-right))',
       }}
     >
-      {/* Ícono WhatsApp (globo + handset), limpio y nítido */}
+      {/* Ícono oficial (globo + handset) en un solo path, nítido */}
       <svg
         viewBox="0 0 32 32"
-        className="h-8 w-8 md:h-9 md:w-9"  /* ← escala del ícono */
+        className="h-8 w-8 md:h-9 md:w-9" /* escala del ícono dentro del botón */
         fill="currentColor"
         aria-hidden="true"
       >
-        {/* Globo de chat */}
-        <path d="M19.05 15.56c-.27-.14-1.6-.86-1.85-.96-.25-.09-.43-.14-.6.14-.18.27-.7.94-.85 1.12-.16.19-.31.21-.57.07-.28-.14-1.18-.44-2.25-1.41-.83-.74-1.38-1.65-1.54-1.93-.16-.27-.02-.42.12-.57.13-.13.31-.35.46-.53.15-.18.19-.29.3-.48.1-.19.06-.36-.02-.52-.08-.15-.58-1.41-.8-1.96-.22-.52-.44-.45-.6-.46l-.52-.01c-.19 0-.49.07-.75.35-.26.28-.99.97-.99 2.33 0 1.36 1.01 2.67 1.15 2.85.14.18 1.99 2.95 4.73 4.15.68.29 1.15.46 1.55.58.66.21 1.26.19 1.74.12.54-.08 1.6-.66 1.83-1.33.23-.67.23-1.2.16-1.33-.06-.12-.24-.19-.5-.32z" />
-        {/* contorno circular (ligero) para mejorar legibilidad sobre fondos claros */}
-        <path d="M26.67 5.33A13.3 13.3 0 0 0 16 1.33 13.34 13.34 0 0 0 2.67 14.69c0 2.36.63 4.17 1.71 5.96L2 30.67l10.27-2.69c1.74.64 3.36.98 5.06.98A13.33 13.33 0 0 0 30.67 16c0-3.56-1.38-6.9-4-9.33z"
-              fill="currentColor" opacity=".0" />
+        <path d="M16.003 3.2c-7.061 0-12.8 5.739-12.8 12.8 0 2.253.59 4.402 1.618 6.252L3.2 28.8l6.682-1.745A12.746 12.746 0 0 0 16.003 28.8c7.061 0 12.8-5.739 12.8-12.8s-5.739-12.8-12.8-12.8zm7.41 18.398c-.314.888-1.538 1.627-2.13 1.662-.568.033-1.281.047-2.066-.127-.478-.106-1.095-.358-1.893-.7-3.33-1.44-5.49-4.781-5.655-5.006-.165-.225-1.35-1.796-1.35-3.429 0-1.633.858-2.435 1.162-2.761.304-.327.661-.409.882-.409.221 0 .44.002.634.012.203.009.48-.077.751.574.271.652.92 2.257.999 2.423.08.166.133.361.025.586-.106.225-.16.361-.315.558-.155.197-.33.441-.47.593-.155.166-.317.346-.136.671.181.326.806 1.329 1.732 2.151 1.191 1.068 2.195 1.399 2.521 1.554.326.155.517.138.71-.083.193-.221.816-.949 1.035-1.275.218-.325.451-.271.747-.155.296.116 1.872.883 2.192 1.043.321.161.535.241.614.376.08.135.08.78-.234 1.667z"/>
       </svg>
 
       <span className="sr-only">WhatsApp</span>

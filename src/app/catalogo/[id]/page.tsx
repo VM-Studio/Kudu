@@ -93,8 +93,8 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
                 key={`${src}-${i}`}
                 onClick={() => setActiveIdx(i)}
                 className={[
-                  'relative aspect-square overflow-hidden rounded-xl ring-1 ring-black/5 bg-white',
-                  i === activeIdx ? 'outline outline-2 outline-[#233265]' : 'hover:ring-black/10',
+                  'relative aspect-square overflow-hidden rounded-xl ring-1 ring-[#647a8b] bg-white',
+                  i === activeIdx ? 'outline outline-2 outline-[#647a8b]' : 'hover:ring-[#647a8b]',
                 ].join(' ')}
                 aria-label={`Ver imagen ${i + 1}`}
               >
@@ -107,7 +107,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         {/* Info */}
         <section className="flex flex-col">
           <h1 className="text-3xl md:text-4xl font-black tracking-tight text-slate-900">{product!.name}</h1>
-          <p className="mt-2 inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700 w-max">
+          <p className="mt-2 inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-[#647a8b] w-max">
             {product!.category}
           </p>
 
@@ -118,7 +118,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               href="https://wa.me/XXXXXXXXXXXX"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-xl bg-[#233265] px-4 py-2.5 text-white font-semibold shadow hover:bg-[#1b244b] transition"
+              className="inline-flex items-center justify-center rounded-xl bg-[#647a8b] px-4 py-2.5 text-white font-semibold shadow hover:bg-[#1b244b] transition"
             >
               Consultar por WhatsApp
             </a>

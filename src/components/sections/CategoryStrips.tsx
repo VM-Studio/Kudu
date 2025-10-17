@@ -2,6 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Montserrat_Alternates } from "next/font/google";
+
+const montAlt = Montserrat_Alternates({
+  subsets: ["latin"],
+  weight: ["800"],
+  display: "swap",
+});
 
 type CatItem = {
   key: "extractores" | "campanas" | "purificadores" | "anafes";
@@ -19,54 +26,57 @@ const CATEGORIES: CatItem[] = [
 
 export default function CategoryStrips() {
   return (
-    /* full-bleed real, de borde a borde */
     <section className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-      <div className="mx-auto max-w-none px-2 sm:px-3 md:px-4 py-4 md:py-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+      {/* ↑↑ Un poco más de padding vertical */}
+      <div className="mx-auto max-w-none px-2 sm:px-3 md:px-4 py-6 md:py-10">
+        <h2
+          className={`${montAlt.className} text-center text-black tracking-tight
+                      text-5xl sm:text-3xl md:text-4xl mb-6 md:mb-8`}
+        >
+          Todas nuestras categorías
+        </h2>
+
+        {/* GRID de “botones” sin tarjeta */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {CATEGORIES.map((c) => (
             <Link
               key={c.key}
               href={c.href}
               className="
-                group relative isolate overflow-hidden
-                h-24 md:h-28 lg:h-32
-                rounded-2xl md:rounded-3xl
-                bg-white ring-1 ring-black/5
-                hover:ring-black/10 hover:shadow-[0_24px_40px_-18px_rgba(2,6,23,.18)]
-                transition
-                flex items-center
+                group inline-flex items-center
+                gap-1 md:gap-2.5
+                h-20 md:h-24 lg:h-28
+                px-2.5 md:px-3 rounded-md
+                bg-transparent border-0 shadow-none
+                transition hover:opacity-95
+                focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40
               "
               aria-label={`Ver productos de ${c.title}`}
             >
-              {/* IMAGEN ÚNICA, LLENANDO LA TARJETA, CON DESVANECIDO A LA DERECHA */}
-              <div className="absolute inset-0 pointer-events-none">
+              {/* Imagen a la izquierda */}
+              <span className="relative shrink-0 w-24 h-20 md:w-28 md:h-24 lg:w-32 lg:h-28">
                 <Image
                   src={c.img}
                   alt={c.title}
                   fill
-                  sizes="100vw"
-                  priority={false}
-                  className="
-                    object-contain object-left p-3 md:p-4
-                    [mask-image:linear-gradient(to_right,black_60%,transparent_92%)]
-                    [--tw:1]             /* nudge to keep same behavior in Safari/Chrome */
-                    [webkit-mask-image:linear-gradient(to_right,black_60%,transparent_92%)]
-                  "
+                  sizes="(min-width:1024px) 25vw, 50vw"
+                  className="object-contain transition-transform duration-300 group-hover:scale-[1.06] group-hover:translate-x-0.5"
                 />
-              </div>
+              </span>
 
-              {/* CONTENIDO (solo texto), queda por encima; padding a la izquierda para no pisar la imagen */}
-              <div className="relative z-10 pl-[44%] sm:pl-[42%] md:pl-[40%] pr-4 md:pr-6">
-                <p className="text-zinc-900 font-semibold text-lg md:text-xl tracking-tight">
+              {/* Texto a la derecha (sin truncar) */}
+              <span className="flex-1 min-w-0 pr-2">
+                <span
+                  className={`${montAlt.className} block text-zinc-900 font-extrabold
+                              leading-tight whitespace-normal
+                              text-xl md:text-2xl tracking-tight`}
+                >
                   {c.title}
-                </p>
-              </div>
-
-              {/* Halo sutil al hover */}
-              <div
-                className="pointer-events-none absolute -z-10 inset-0 opacity-0 group-hover:opacity-100 transition
-                           blur-2xl bg-[radial-gradient(40%_80%_at_40%_50%,rgba(11,95,255,.10),rgba(11,95,255,0))]"
-              />
+                </span>
+                <span className="text-sm md:text-base text-zinc-500 group-hover:text-zinc-700 transition">
+                  Ver productos →
+                </span>
+              </span>
             </Link>
           ))}
         </div>
