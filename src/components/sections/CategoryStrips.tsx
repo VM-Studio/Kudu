@@ -25,8 +25,8 @@ const CATEGORIES: CatItem[] = [
 ];
 
 export default function CategoryStrips() {
-  return (
-    <section className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+    return (
+      <section className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] pt-4 md:pt-6 pb-0 md:pb-0">
       {/* ↑↑ Un poco más de padding vertical */}
       <div className="mx-auto max-w-none px-2 sm:px-3 md:px-4 py-6 md:py-10">
         <h2
