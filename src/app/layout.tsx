@@ -5,14 +5,11 @@ import { Montserrat_Alternates } from "next/font/google";
 import Link from "next/link";
 import WhatsAppFab from "@/components/WhatsAppFab";
 
-
-
 export const metadata: Metadata = {
   title: "KUDU | ELECTRODOMESTICOS",
   description: "Catálogo de extractores, campanas, purificadores y anafes.",
 };
 
-// Fuente para títulos — expuesta como variable CSS
 const montAlt = Montserrat_Alternates({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800", "900"],
@@ -27,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* NAVBAR */}
         <header className="sticky top-0 z-50 bg-[#63798a] shadow-[0_8px_24px_-10px_rgba(35,50,101,0.85)]">
           <div className="mx-auto max-w-6xl px-4 py-4 flex items-center gap-8">
-            <nav className="flex items-center gap-10 text-sm">
+            <nav className="flex items-center gap-8 text-sm">
               <Link href="/" className="text-white/90 hover:text-white transition-colors font-bold">
                 Inicio
               </Link>
@@ -36,6 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </Link>
               <Link href="/contacto" className="text-white/90 hover:text-white transition-colors font-bold">
                 Contacto
+              </Link>
+              {/* NUEVO: PERFIL */}
+              <Link href="/perfil" className="text-white/90 hover:text-white transition-colors font-bold">
+                Publicaciónes
               </Link>
             </nav>
           </div>
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Botón flotante de WhatsApp (global) */}
         <WhatsAppFab
-          phone="54911XXXXXXXX" // ← tu número sin + ni espacios
+          phone="54911XXXXXXXX"
           message="Hola KUDU 👋, quiero hacer una consulta."
           utm="utm_source=web&utm_medium=fab&utm_campaign=whatsapp"
         />
